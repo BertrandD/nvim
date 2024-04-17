@@ -56,6 +56,8 @@ metals_config.settings = {
 -- docs about this
 -- metals_config.init_options.statusBarProvider = "on"
 
+metals_config.on_init = on_init
+
 -- Example if you are using cmp how to make sure the correct capabilities for snippets are set
 metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 

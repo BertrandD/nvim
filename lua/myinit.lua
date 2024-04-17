@@ -15,3 +15,4 @@ vim.api.nvim_create_autocmd("BufRead", {
 
 vim.fn.sign_define('DapBreakpoint',{ text ='🟥', texthl ='', linehl ='', numhl =''})
 vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
+vim.opt.conceallevel = 1
