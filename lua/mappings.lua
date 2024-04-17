@@ -35,22 +35,37 @@ M.lspconfig = {
     end, "LSP Document Symbols"},
     ["<leader>sw"] = { function()
       require("telescope.builtin").lsp_dynamic_workspace_symbols()
-    end, "LSP Workspace Symbols"}
+    end, "LSP Workspace Symbols"},
+    ["<leader>ls"] = {
+          function()
+            vim.lsp.buf.signature_help()
+          end,
+          "LSP signature help",
+        }
   }
 }
 
 M.telescope = {
   n = {
-    ["<leader>fb"] = { "<cmd> Telescope buffers sort_lastused=true <CR>", "Find buffers" },
-    ["<leader>fd"] = { function()
+    ["<leader>fb"] = { "<cmd> Telescope buffers <CR>", "Telescope Find buffers" },
+    ["<leader>fr"] = { "<cmd> Telescope lsp_references <CR>", "Telescope lsp references" },
+    ["<leader>fi"] = { "<cmd> Telescope lsp_implementations <CR>", "Telescope lsp implementations" },
+    ["<leader>fd"] = { "<cmd> Telescope lsp_definitions <CR>", "Telescope lsp definitions" },
+    ["<leader>ftd"] = { "<cmd> Telescope lsp_type_definitions <CR>", "Telescope lsp type definition" },
+    ["<leader>fci"] = { "<cmd> Telescope lsp_incoming_calls <CR>", "Telescope lsp incoming calls" },
+    ["<leader>fco"] = { "<cmd> Telescope lsp_outgoing_calls <CR>", "Telescope lsp outgoing calls " },
+    ["<leader>d"] = { "<cmd> Telescope diagnostics <CR>", "Telescope diagnostics " },
+    ["<A-p>"] = { "<cmd> Telescope neoclip <CR>", "Telescope clip history" },
+    ["<M-r>"] = {"<cmd> Telescope oldfiles <CR>", "Telescope Recent files"},
+    ["<C-S-v>"] = {"<cmd> Telescope registers <CR>", "Telescope Register"},
+    ["<leader>ftt"] = { function()
       local api = require("nvim-tree.api")
       local node = api.tree.get_node_under_cursor()
       require('telescope.builtin').live_grep({search_dirs={node.absolute_path}})
-
-    end, "Find in selected directory"},
+    end, "Telescope Find in selected tree (directory)"},
     ["<leader>lmc"] = { function ()
       require("telescope").extensions.metals.commands()
-    end, "Metals commands"}
+    end, "Telescope Metals commands"}
   }
 }
 
