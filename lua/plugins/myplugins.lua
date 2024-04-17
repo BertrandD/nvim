@@ -1,48 +1,15 @@
 local plugins = {
   {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
-    end,
-    dependencies = {
-      'towolf/vim-helm'
-    },
+    "nvim-treesitter/nvim-treesitter",
     opts = {
-      setup = {
-        rust_analyzer = function()
-          return true
-        end,
-      },
+      ensure_installed = "all",
     },
   },
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "rust-analyzer",
-        "pyright",
-        "typescript-language-server",
-        -- "eslint",
-        "clangd",
-        "codelldb",
-        "bash-language-server",
-        "bash-debug-adapter"
-      },
-      PATH = "prepend"
-    }
-  },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        opts = {
-            ensure_installed = "all",
-        },
-    },
   {
     "mfussenegger/nvim-dap",
-    config = function ()
-        local bash = require('configs.bash-dap')
-        bash.setup()
+    config = function()
+      local bash = require('configs.bash-dap')
+      bash.setup()
     end
   },
   {
@@ -53,34 +20,6 @@ local plugins = {
     },
     opts = {
     }
-  },
-  {
-    'mrcjkb/rustaceanvim',
-    version = '^4', -- Recommended
-    ft = { 'rust' },
-    dependencies = {
-      "mfussenegger/nvim-dap",
-    },
-    config = function ()
-      local configs = require("nvchad.configs.lspconfig")
-      local on_attach = configs.on_attach
-
-      vim.g.rustaceanvim = {
-        dap = {
-          autoload_configurations = true
-        },
-        server = {
-          on_attach =  on_attach
-        }
-      }
-    end
-  },
-  {
-    'saecki/crates.nvim',
-    event = { "BufRead Cargo.toml" },
-    config = function()
-        require('crates').setup()
-    end,
   },
   {
     "djoshea/vim-autoread"
@@ -113,7 +52,7 @@ local plugins = {
       },
       extensions = {
         gitmoji = {
-          action = function (entry)
+          action = function(entry)
             local emoji = entry.value.value
             local pos = vim.api.nvim_win_get_cursor(0)[2]
             local line = vim.api.nvim_get_current_line()
@@ -125,49 +64,31 @@ local plugins = {
     }
   },
   {
-    "scalameta/nvim-metals",
-    -- lazy = false,
+    "AckslD/nvim-neoclip.lua",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "rcarriga/nvim-dap-ui",
-      "nvim-neotest/nvim-nio",
-      {
-        "mfussenegger/nvim-dap",
-        -- config = function(self, opts)
-        --
-        --   -- Debug settings if you're using nvim-dap
-        --   local dap = require("dap")
-        --
-        --   dap.configurations.scala = {
-        --     {
-        --       type = "scala",
-        --       request = "launch",
-        --       name = "Run or test file",
-        --       metals = {
-        --         runType = "runOrTestFile",
-        --       },
-        --     }
-        --   }
-        -- end
-      }
-    }
+      { 'kkharji/sqlite.lua' },
+      { 'nvim-telescope/telescope.nvim' },
+    },
+    config = function()
+      require('neoclip').setup()
+    end,
   },
   {
     'kristijanhusak/vim-dadbod-ui',
-     dependencies = {
-      { 'tpope/vim-dadbod', lazy = true },
+    dependencies = {
+      { 'tpope/vim-dadbod',                     lazy = true },
       { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
-     },
-     cmd = {
+    },
+    cmd = {
       'DBUI',
       'DBUIToggle',
       'DBUIAddConnection',
       'DBUIFindBuffer',
-     },
-     init = function()
+    },
+    init = function()
       -- Your DBUI configuration
       vim.g.db_ui_use_nerd_fonts = 1
-     end,
+    end,
   },
   {
     "nvim-tree/nvim-tree.lua",
@@ -206,24 +127,6 @@ local plugins = {
       return merge_tb("force", defaults, opts)
     end,
   },
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "nvim-telescope/telescope.nvim", -- optional
-      "sindrets/diffview.nvim",        -- optional
-      "ibhagwan/fzf-lua",              -- optional
-    },
-    cmd = {
-      "Neogit"
-    },
-    config = function()
-      require("neogit").setup({
-       kind = "vsplit", -- opens neogit in a split
-       integrations = { diffview = true }, -- adds integration with diffview.nvim
-      })
-     end,
-  },
   -- {
   --  'rmagatti/auto-session',
   --   lazy = false,
@@ -235,13 +138,10 @@ local plugins = {
   --   end
   -- },
   {
-    'olacin/telescope-gitmoji.nvim'
-  },
-  {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
-      auto_open = true, -- automatically open the list when you have diagnostics
+      auto_open = true,  -- automatically open the list when you have diagnostics
       auto_close = true, -- automatically close the list when you have no diagnostics
     }
   },
@@ -251,20 +151,20 @@ local plugins = {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
-      "stevanmilic/neotest-scala",
+      "aleixab/neotest-scala",
       "haydenmeade/neotest-jest",
       "mrcjkb/rustaceanvim",
       "nvim-neotest/neotest-python",
       "nvim-neotest/neotest-vim-test"
     },
     keys = {
-        { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run File" },
-        { "<leader>tT", function() require("neotest").run.run(vim.loop.cwd()) end, desc = "Run All Test Files" },
-        { "<leader>tr", function() require("neotest").run.run() end, desc = "Run Nearest" },
-        { "<leader>ts", function() require("neotest").summary.toggle() end, desc = "Toggle Summary" },
-        { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
-        { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Output Panel" },
-        { "<leader>tS", function() require("neotest").run.stop() end, desc = "Stop" },
+      { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end,                      desc = "Run File" },
+      { "<leader>tT", function() require("neotest").run.run(vim.loop.cwd()) end,                          desc = "Run All Test Files" },
+      { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run Nearest" },
+      { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle Summary" },
+      { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
+      { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle Output Panel" },
+      { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop" },
     },
     config = function()
       require("neotest").setup({
@@ -284,10 +184,6 @@ local plugins = {
         },
       })
     end
-  },
-  {
-    'ruanyl/vim-gh-line',
-    lazy = false
   }
 }
 return plugins
