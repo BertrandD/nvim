@@ -45,35 +45,6 @@ local plugins = {
     end
   },
   {
-    "nvim-telescope/telescope.nvim",
-    opts = {
-      defaults = {
-        file_ignore_patterns = { "target" },
-      },
-      extensions = {
-        gitmoji = {
-          action = function(entry)
-            local emoji = entry.value.value
-            local pos = vim.api.nvim_win_get_cursor(0)[2]
-            local line = vim.api.nvim_get_current_line()
-            local nline = line:sub(0, pos) .. emoji .. line:sub(pos + 1)
-            vim.api.nvim_set_current_line(nline)
-          end
-        }
-      }
-    }
-  },
-  {
-    "AckslD/nvim-neoclip.lua",
-    dependencies = {
-      { 'kkharji/sqlite.lua' },
-      { 'nvim-telescope/telescope.nvim' },
-    },
-    config = function()
-      require('neoclip').setup()
-    end,
-  },
-  {
     'kristijanhusak/vim-dadbod-ui',
     dependencies = {
       { 'tpope/vim-dadbod',                     lazy = true },
