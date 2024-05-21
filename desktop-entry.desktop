@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Neovim NAME
-Exec=cd FOLDER && /home/bdarbon/apps/nvim
+Exec=terminator --working-directory FOLDER -x nvim
 Version=1.0
 Type=Application
 Categories=Development;IDE;
-Terminal=true
+Terminal=false
 Icon=/snap/nvim/2809/usr/share/icons/hicolor/128x128/apps/nvim.png
