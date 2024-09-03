@@ -8,16 +8,17 @@ return {
 
       local opts = {
         sources = {
-          { name = "copilot" },
+          -- { name = "copilot" },
           -- other sources from nvchad
+          { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "buffer" },
           { name = "nvim_lua" },
           { name = "path" },
-        }
+        },
       }
       -- return defaults
       return merge_tb("force", defaults, opts)
     end,
-  }
+  },
 }

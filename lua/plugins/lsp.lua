@@ -8,19 +8,19 @@ return {
     dependencies = {
       'towolf/vim-helm'
     },
-    opts = {
-      setup = {
-        rust_analyzer = function()
-          return true
-        end,
-      },
-    },
+    -- opts = {
+    --   setup = {
+    --     rust_analyzer = function()
+    --       return true
+    --     end,
+    --   },
+    -- },
   },
   {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "rust-analyzer",
+        -- "rust-analyzer",
         "pyright",
         "typescript-language-server",
         "lua-language-server",
