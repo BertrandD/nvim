@@ -8,21 +8,20 @@ local plugins = {
   {
     "mfussenegger/nvim-dap",
     config = function()
-      local bash = require('configs.bash-dap')
+      local bash = require "configs.bash-dap"
       bash.setup()
-    end
+    end,
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
       "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap"
+      "mfussenegger/nvim-dap",
     },
-    opts = {
-    }
+    opts = {},
   },
   {
-    "djoshea/vim-autoread"
+    "djoshea/vim-autoread",
   },
   -- {
   --   'mg979/vim-visual-multi',
@@ -31,10 +30,10 @@ local plugins = {
   {
     "rcarriga/nvim-dap-ui",
     dependencies = {
-      "mfussenegger/nvim-dap"
+      "mfussenegger/nvim-dap",
     },
     config = function()
-      local dap, dapui = require('dap'), require('dapui')
+      local dap, dapui = require "dap", require "dapui"
       dapui.setup()
       -- dap.listeners.after.event_initialized["dapui_config"] = function()
       --   dap.repl.open()
@@ -42,19 +41,19 @@ local plugins = {
       -- dap.listeners.before.event_terminated["dapui_config"] = function()
       --   dapui.close()
       -- end
-    end
+    end,
   },
   {
-    'kristijanhusak/vim-dadbod-ui',
+    "kristijanhusak/vim-dadbod-ui",
     dependencies = {
-      { 'tpope/vim-dadbod',                     lazy = true },
-      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
     },
     cmd = {
-      'DBUI',
-      'DBUIToggle',
-      'DBUIAddConnection',
-      'DBUIFindBuffer',
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
     },
     init = function()
       -- Your DBUI configuration
@@ -74,16 +73,16 @@ local plugins = {
         },
         git = {
           enable = true,
-          ignore = false
+          ignore = false,
         },
         renderer = {
           group_empty = true,
           highlight_git = true,
           icons = {
             show = {
-              git = true
-            }
-          }
+              git = true,
+            },
+          },
         },
         actions = {
           open_file = {
@@ -111,10 +110,25 @@ local plugins = {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Trouble",
     opts = {
-      auto_open = true,  -- automatically open the list when you have diagnostics
-      auto_close = true, -- automatically close the list when you have no diagnostics
-    }
+      -- auto_open = true, -- automatically open the list when you have diagnostics
+      -- auto_close = true, -- automatically close the list when you have no diagnostics
+      modes = {
+        cascade = {
+          mode = "diagnostics", -- inherit from diagnostics mode
+          filter = function(items)
+            local severity = vim.diagnostic.severity.HINT
+            for _, item in ipairs(items) do
+              severity = math.min(severity, item.severity)
+            end
+            return vim.tbl_filter(function(item)
+              return item.severity == severity
+            end, items)
+          end,
+        },
+      },
+    },
   },
   {
     -- Not working yet !
@@ -126,35 +140,80 @@ local plugins = {
       "haydenmeade/neotest-jest",
       "mrcjkb/rustaceanvim",
       "nvim-neotest/neotest-python",
-      "nvim-neotest/neotest-vim-test"
+      "nvim-neotest/neotest-vim-test",
     },
     keys = {
-      { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end,                      desc = "Run File" },
-      { "<leader>tT", function() require("neotest").run.run(vim.loop.cwd()) end,                          desc = "Run All Test Files" },
-      { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run Nearest" },
-      { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle Summary" },
-      { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
-      { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle Output Panel" },
-      { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop" },
+      {
+        "<leader>tt",
+        function()
+          require("neotest").run.run(vim.fn.expand "%")
+        end,
+        desc = "Run File",
+      },
+      {
+        "<leader>tT",
+        function()
+          require("neotest").run.run(vim.loop.cwd())
+        end,
+        desc = "Run All Test Files",
+      },
+      {
+        "<leader>tr",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Run Nearest",
+      },
+      {
+        "<leader>ts",
+        function()
+          require("neotest").summary.toggle()
+        end,
+        desc = "Toggle Summary",
+      },
+      {
+        "<leader>to",
+        function()
+          require("neotest").output.open { enter = true, auto_close = true }
+        end,
+        desc = "Show Output",
+      },
+      {
+        "<leader>tO",
+        function()
+          require("neotest").output_panel.toggle()
+        end,
+        desc = "Toggle Output Panel",
+      },
+      {
+        "<leader>tS",
+        function()
+          require("neotest").run.stop()
+        end,
+        desc = "Stop",
+      },
     },
     config = function()
-      require("neotest").setup({
+      require("neotest").setup {
         adapters = {
-          require("neotest-python")({
+          require "neotest-python" {
             dap = { justMyCode = false },
-          }),
-          require("neotest-scala")({
+          },
+          require "neotest-scala" {
             runner = "sbt",
-            framework = "scalatest"
-          }),
-          require('rustaceanvim.neotest'),
-          require("neotest-jest"),
-          require("neotest-vim-test")({
+            framework = "scalatest",
+          },
+          require "rustaceanvim.neotest",
+          require "neotest-jest",
+          require "neotest-vim-test" {
             ignore_file_types = { "python", "vim", "lua", "rs", "rust", "scala", "ts", "typescript" },
-          }),
+          },
         },
-      })
-    end
-  }
+        output_panel = {
+          open = "botright vsplit | vertical resize 80",
+        },
+      }
+    end,
+  },
 }
 return plugins

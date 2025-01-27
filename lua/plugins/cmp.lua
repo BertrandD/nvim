@@ -8,7 +8,7 @@ return {
 
       local opts = {
         sources = {
-          -- { name = "copilot" },
+          { name = "copilot" },
           -- other sources from nvchad
           { name = "nvim_lsp" },
           { name = "luasnip" },

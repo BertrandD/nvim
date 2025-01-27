@@ -1,31 +1,35 @@
 return {
   {
-    'mrcjkb/rustaceanvim',
-    version = '^5', -- Recommended
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
     lazy = false,
-    ft = { 'rust' },
+    ft = { "rust" },
     dependencies = {
       "mfussenegger/nvim-dap",
     },
     config = function()
-      local configs = require("nvchad.configs.lspconfig")
+      local configs = require "nvchad.configs.lspconfig"
       local on_attach = configs.on_attach
 
       vim.g.rustaceanvim = {
         dap = {
-          autoload_configurations = true
+          autoload_configurations = true,
         },
         server = {
-          on_attach = on_attach
-        }
+          on_attach = on_attach,
+        },
       }
-    end
+    end,
   },
   {
-    'saecki/crates.nvim',
+    "ron-rs/ron.vim",
+    lazy = false,
+  },
+  {
+    "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     config = function()
-      require('crates').setup()
+      require("crates").setup()
     end,
   },
 }

@@ -1,4 +1,4 @@
-local configs = require("nvchad.configs.lspconfig")
+local configs = require "nvchad.configs.lspconfig"
 local on_attach = require("nvchad.configs.lspconfig").on_attach
 local on_init = require("nvchad.configs.lspconfig").on_init
 local capabilities = require("nvchad.configs.lspconfig").capabilities
@@ -6,14 +6,19 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 local merge_tb = vim.tbl_deep_extend
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "jsonls", "cssls", "tsserver", "clangd", "pyright", "helm_ls", "bashls" }
+local servers = { "html", "jsonls", "cssls", "ts_ls", "clangd", "pyright", "helm_ls", "bashls", "volar" }
+
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
 
 for _, lsp in ipairs(servers) do
-	local opts = {
-		on_attach = on_attach,
-        on_init = on_init,
-		capabilities = capabilities,
-	}
+  local opts = {
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+  }
 
   local exists, settings = pcall(require, "configs.server-settings." .. lsp)
   if exists then
@@ -21,23 +26,71 @@ for _, lsp in ipairs(servers) do
   end
 
   lspconfig[lsp].setup(opts)
-
 end
 
 local config = {
-	virtual_text = false,
-	underline = true,
-	update_in_insert = false,
-	severity_sort = true,
-	float = {
-		focusable = false,
-		style = "minimal",
-		border = "single",
-		source = "always",
-	},
+  virtual_text = false,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "single",
+    source = "always",
+  },
 }
 
 vim.diagnostic.config(config)
+
+-- Folding
+
+vim.o.foldcolumn = "0" -- '0' is not bad
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+local handler = function(virtText, lnum, endLnum, width, truncate)
+  local newVirtText = {}
+  local suffix = (" 󰁂 %d "):format(endLnum - lnum)
+  local sufWidth = vim.fn.strdisplaywidth(suffix)
+  local targetWidth = width - sufWidth
+  local curWidth = 0
+  for _, chunk in ipairs(virtText) do
+    local chunkText = chunk[1]
+    local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+    if targetWidth > curWidth + chunkWidth then
+      table.insert(newVirtText, chunk)
+    else
+      chunkText = truncate(chunkText, targetWidth - curWidth)
+      local hlGroup = chunk[2]
+      table.insert(newVirtText, { chunkText, hlGroup })
+      chunkWidth = vim.fn.strdisplaywidth(chunkText)
+      -- str width returned from truncate() may less than 2nd argument, need padding
+      if curWidth + chunkWidth < targetWidth then
+        suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+      end
+      break
+    end
+    curWidth = curWidth + chunkWidth
+  end
+  table.insert(newVirtText, { suffix, "MoreMsg" })
+  return newVirtText
+end
+
+-- global handler
+-- `handler` is the 2nd parameter of `setFoldVirtTextHandler`,
+-- check out `./lua/ufo.lua` and search `setFoldVirtTextHandler` for detail.
+require("ufo").setup {
+  fold_virt_text_handler = handler,
+}
+
+-- buffer scope handler
+-- will override global handler if it is existed
+-- local bufnr = vim.api.nvim_get_current_buf()
+-- require('ufo').setFoldVirtTextHandler(bufnr, handler)
+
+require("ufo").setup()
 
 -- Scala
 
