@@ -6,6 +6,19 @@ local plugins = {
     },
   },
   {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("treesitter-context").setup {
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        line_numbers = true,
+        mode = "topline",
+        separator = "-",
+      }
+    end,
+  },
+  {
     "mfussenegger/nvim-dap",
     config = function()
       local bash = require "configs.bash-dap"
