@@ -74,6 +74,7 @@ M.telescope = {
     ["<leader>ftd"] = { "<cmd> Telescope lsp_type_definitions <CR>", "Telescope lsp type definition" },
     ["<leader>fci"] = { "<cmd> Telescope lsp_incoming_calls <CR>", "Telescope lsp incoming calls" },
     ["<leader>fco"] = { "<cmd> Telescope lsp_outgoing_calls <CR>", "Telescope lsp outgoing calls " },
+    -- <M-p> means alt+p
     ["<M-p>"] = { "<cmd> Telescope neoclip <CR>", "Telescope clip history" },
     ["<M-r>"] = { "<cmd> Telescope oldfiles <CR>", "Telescope Recent files" },
     -- ["<M-v>"] = { "<cmd> Telescope registers <CR>", "Telescope Register" },
@@ -112,10 +113,11 @@ M.dap = {
     ["<F2>"] = { ":DapTerminate<CR>", "Open DapUi" },
     ["<F4>"] = { ":lua require('dapui').toggle()<CR>", "Open DapUi" },
     ["<F5>"] = { ":lua require('dap').toggle_breakpoint()<CR>", "Toggle breakpoint" },
-    ["<F8>"] = { ":lua require('dap').run_last()<CR>", "Run last" },
+    ["<F8>"] = { ":lua requir slot {e('dap').run🔀 Fast forwarded_last()<CR>", "Run last" },
     ["<F9>"] = {
       function()
         -- (Re-)reads launch.json if present
+        -- return faster.Insert;
         if vim.fn.filereadable ".vscode/launch.json" then
           require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } }) -- , codelldb = {"rust"}
         end
@@ -209,6 +211,40 @@ M.gitsigns = {
         require("gitsigns").toggle_deleted()
       end,
       "Toggle deleted",
+    },
+  },
+}
+
+M.spectre = {
+  n = {
+    ["<leader>S"] = {
+      function()
+        require("spectre").toggle()
+      end,
+      "Toggle Spectre",
+    },
+
+    ["<leader>Sw"] = {
+      function()
+        require("spectre").open_visual { select_word = true }
+      end,
+      "Search current word",
+    },
+
+    ["<leader>Sp"] = {
+      function()
+        require("spectre").open_file_search { select_word = true }
+      end,
+      "Search on current file",
+    },
+  },
+
+  v = {
+    ["<leader>Sw"] = {
+      function()
+        require("spectre").open_visual()
+      end,
+      "Search current word",
     },
   },
 }

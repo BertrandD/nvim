@@ -27,22 +27,10 @@ return {
   { "sbdchd/neoformat" },
   {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        -- "rust-analyzer",
-        "pyright",
-        "typescript-language-server",
-        "lua-language-server",
-        "vue-language-server",
-        "prettier",
-        -- "eslint",
-        "clangd",
-        "codelldb",
-        "bash-language-server",
-        "bash-debug-adapter",
-      },
-      PATH = "prepend",
-    },
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+    opts = function()
+      return require "configs.mason"
+    end,
   },
   {
     "kevinhwang91/nvim-ufo",

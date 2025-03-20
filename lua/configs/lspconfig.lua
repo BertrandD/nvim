@@ -6,7 +6,7 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 local merge_tb = vim.tbl_deep_extend
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "jsonls", "cssls", "ts_ls", "clangd", "pyright", "helm_ls", "bashls", "volar" }
+local servers = { "html", "jsonls", "cssls", "ts_ls", "clangd", "pyright", "helm_ls", "bashls", "volar", "taplo" }
 
 capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,

@@ -21,8 +21,8 @@ local plugins = {
   {
     "mfussenegger/nvim-dap",
     config = function()
-      local bash = require "configs.bash-dap"
-      bash.setup()
+      local conf = require "configs.dap"
+      conf.setup()
     end,
   },
   {

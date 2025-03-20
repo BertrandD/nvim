@@ -13,7 +13,7 @@ return {
             local line = vim.api.nvim_get_current_line()
             local nline = line:sub(0, pos) .. emoji .. line:sub(pos + 1)
             vim.api.nvim_set_current_line(nline)
-          end
+          end,
         },
         frecency = {
           db_root = "/home/my_username/path/to/db_root",
@@ -21,21 +21,21 @@ return {
           show_unindexed = true,
           ignore_patterns = { "*.git/*", "*/tmp/*" },
           disable_devicons = false,
-          workspaces = {}
-        }
-      }
-    }
+          workspaces = {},
+        },
+      },
+    },
   },
   {
     "AckslD/nvim-neoclip.lua",
     dependencies = {
-      { 'kkharji/sqlite.lua' },
-      { 'nvim-telescope/telescope.nvim' },
+      { "kkharji/sqlite.lua" },
+      { "nvim-telescope/telescope.nvim" },
     },
     config = function()
-      require('neoclip').setup({
+      require("neoclip").setup {
         enable_persistent_history = true,
-      })
+      }
     end,
   },
 }

@@ -1,12 +1,13 @@
 local api = vim.api
 
 vim.opt.title = true
+vim.opt.titlelen = 0 -- do not shorten title
 
 vim.opt.clipboard = "unnamedplus"
 
 api.nvim_create_autocmd(
   "BufEnter",
-  { pattern = "*", command = 'let &titlestring = system(\'pwd | sed "s#.*/##"\') .. " - " .. expand("%:t")' }
+  { pattern = "*", command = 'let &titlestring = "nvim " .. system(\'pwd | sed "s#.*/##"\') .. " - " .. expand("%:t")' }
 )
 vim.api.nvim_create_autocmd("BufRead", {
   group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),

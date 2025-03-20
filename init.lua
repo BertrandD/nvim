@@ -28,6 +28,8 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
+require("lazy").setup { { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" } }
+
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")

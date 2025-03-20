@@ -17,6 +17,14 @@ return {
         },
         server = {
           on_attach = on_attach,
+          default_settings = {
+            -- rust-analyzer language server configuration
+            ["rust-analyzer"] = {
+              cargo = {
+                targetDir = "target-ra/target",
+              },
+            },
+          },
         },
       }
     end,
