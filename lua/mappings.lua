@@ -29,6 +29,19 @@ M.general = {
   },
 }
 
+M.copilot = {
+  n = {
+    ["<C-l>"] = {
+      "<cmd> CopilotChat <CR>",
+    },
+  },
+  v = {
+    ["<C-l>"] = {
+      "<cmd> CopilotChat <CR>",
+    },
+  },
+}
+
 M.lspconfig = {
   n = {
     ["<leader>sd"] = {

@@ -4,7 +4,7 @@ return {
     lazy = false,
     config = function()
       require("copilot").setup {
-        suggestion = { enabled = false },
+        suggestion = { enabled = true, auto_trigger = true, keymap = { accept = "<M-c>" } },
         panel = { enabled = false },
       }
     end,
