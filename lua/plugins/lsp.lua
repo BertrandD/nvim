@@ -38,4 +38,8 @@ return {
       "kevinhwang91/promise-async",
     },
   },
+  {
+    "noir-lang/noir-nvim",
+    ft = { "noir" },
+  },
 }
