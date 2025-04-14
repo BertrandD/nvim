@@ -5,6 +5,8 @@ vim.opt.titlelen = 0 -- do not shorten title
 
 vim.opt.clipboard = "unnamedplus"
 
+vim.notify = require "notify"
+
 api.nvim_create_autocmd(
   "BufEnter",
   { pattern = "*", command = 'let &titlestring = "nvim " .. system(\'pwd | sed "s#.*/##"\') .. " - " .. expand("%:t")' }
@@ -21,26 +23,6 @@ vim.fn.sign_define("DapBreakpoint", { text = "🟥", texthl = "", linehl = "", n
 vim.fn.sign_define("DapStopped", { text = "▶️", texthl = "", linehl = "", numhl = "" })
 
 vim.opt.conceallevel = 1
-vim.g.neovide_scale_factor = 1.5
-vim.g.neovide_cursor_vfx_mode = ""
-vim.g.neovide_cursor_trail_size = 0
-vim.g.neovide_refresh_rate = 120
-
-if vim.g.neovide == true then
-  vim.api.nvim_set_keymap(
-    "n",
-    "<C-=>",
-    ":lua vim.g.neovide_scale_factor = math.min(vim.g.neovide_scale_factor + 0.1,  5.0)<CR>",
-    { silent = true }
-  )
-  vim.api.nvim_set_keymap(
-    "n",
-    "<C-->",
-    ":lua vim.g.neovide_scale_factor = math.max(vim.g.neovide_scale_factor - 0.1,  0.1)<CR>",
-    { silent = true }
-  )
-  vim.api.nvim_set_keymap("n", "<C-0>", ":lua vim.g.neovide_scale_factor = 2<CR>", { silent = true })
-end
 
 -- Keyboard users
 vim.keymap.set("n", "<C-t>", function()

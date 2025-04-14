@@ -8,6 +8,17 @@ return {
   },
   { "nvzone/volt", lazy = true },
   { "nvzone/menu", lazy = true },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup {
+        background_colour = "#000000",
+        timeout = 2000,
+        -- stages = "fade",
+        -- render = "minimal",
+      }
+    end,
+  },
 
   -- These are some examples, uncomment them if you want to see them work!
   -- {
