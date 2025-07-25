@@ -7,6 +7,8 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.notify = require "notify"
 
+require("telescope").load_extension "ui-select"
+
 api.nvim_create_autocmd(
   "BufEnter",
   { pattern = "*", command = 'let &titlestring = "nvim " .. system(\'pwd | sed "s#.*/##"\') .. " - " .. expand("%:t")' }

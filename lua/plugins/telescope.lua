@@ -1,6 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-telescope/telescope-ui-select.nvim" },
     opts = {
       defaults = {
         file_ignore_patterns = { "target" },

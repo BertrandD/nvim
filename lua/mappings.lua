@@ -1,4 +1,6 @@
 require "nvchad.mappings"
+local map = vim.keymap.set
+
 local M = {}
 
 M.git = {
@@ -104,6 +106,10 @@ M.telescope = {
         require("telescope").extensions.metals.commands()
       end,
       "Telescope Metals commands",
+    },
+    ["<leader>ca"] = {
+      vim.lsp.buf.code_action,
+      "LSP code actions",
     },
   },
 }
@@ -261,8 +267,6 @@ M.spectre = {
     },
   },
 }
-
-local map = vim.keymap.set
 
 for group, mappings in pairs(M) do
   for mode, maps in pairs(mappings) do
