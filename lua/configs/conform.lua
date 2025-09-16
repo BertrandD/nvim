@@ -5,7 +5,10 @@ local options = {
     html = { "prettier" },
     ts = { "prettier" },
     typescript = { "prettier" },
+    javascript = { "prettier" },
     vue = { "prettier" },
+    json = { "prettier" },
+    typescriptreact = { "prettier" },
   },
 
   format_on_save = {

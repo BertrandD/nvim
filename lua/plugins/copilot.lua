@@ -39,8 +39,10 @@ return {
       -- add any opts here
       -- for example
       provider = "copilot", -- or "openai" or "avante"
-      copilot = {
-        model = "claude-3.5-sonnet",
+      providers = {
+        copilot = {
+          model = "claude-3.5-sonnet",
+        },
       },
       suggestion = {
         accept = "<M-l>",
