@@ -21,7 +21,7 @@ return {
             -- rust-analyzer language server configuration
             ["rust-analyzer"] = {
               cargo = {
-                targetDir = "target-ra/target",
+                targetDir = "/home/bertrand/tmp/cargo-target-ra",
               },
             },
           },

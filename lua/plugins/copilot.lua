@@ -17,28 +17,32 @@ return {
       require("copilot_cmp").setup()
     end,
   },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    lazy = false,
-    branch = "main",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
-    opts = {
-      debug = false, -- Enable debugging
-      -- See Configuration section for rest
-    },
-    -- See Commands section for default commands if you want to lazy load on them
-  },
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   lazy = false,
+  --   branch = "main",
+  --   dependencies = {
+  --     { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+  --     { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+  --   },
+  --   opts = {
+  --     debug = false, -- Enable debugging
+  --     -- See Configuration section for rest
+  --   },
+  --   -- See Commands section for default commands if you want to lazy load on them
+  -- },
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
+    ---@module 'avante'
+    ---@type avante.Config
     opts = {
+      instructions_file = "avante.md",
+
       -- add any opts here
       -- for example
-      provider = "copilot", -- or "openai" or "avante"
+      provider = "claude-code", -- or "openai" or "avante"
       providers = {
         copilot = {
           model = "claude-3.5-sonnet",

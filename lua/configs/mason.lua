@@ -13,6 +13,7 @@ local opts = {
     "codelldb",
     "bash-language-server",
     "bash-debug-adapter",
+    "yamlls",
   }, -- not an option from mason.nvim
   max_concurrent_installers = 10,
 }
