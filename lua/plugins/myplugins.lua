@@ -33,9 +33,9 @@ local plugins = {
     },
     opts = {},
   },
-  {
-    "djoshea/vim-autoread",
-  },
+  -- {
+  --   "djoshea/vim-autoread",
+  -- },
   -- {
   --   'mg979/vim-visual-multi',
   --   lazy = false

@@ -17,7 +17,7 @@ return {
           end,
         },
         frecency = {
-          db_root = "/home/my_username/path/to/db_root",
+          db_root = "/home/bertrand/tmp/frecency_db_root",
           show_scores = true,
           show_unindexed = true,
           ignore_patterns = { "*.git/*", "*/tmp/*" },
